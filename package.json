@@ -1,0 +1,15 @@
+{
+  "name": "create-mock-store",
+  "version": "1.0.0",
+  "description": "A test library to construct mock Vuex stores",
+  "main": "utils.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Tom Carter",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^23.0.0-alpha.0",
+    "testdouble": "^3.5.2"
+  }
+}
