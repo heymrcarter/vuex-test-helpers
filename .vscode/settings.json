@@ -1,0 +1,15 @@
+{
+  "standard.autoFixOnSave": true,
+  "eslint.enable": false,
+  "standard.usePackageJson": true,
+  "mocha.files.glob": "test/**/*.js",
+  "mocha.options": {
+    "compiler": "js:babel-core"
+  },
+  "mocha.runTestsOnSave": "true",
+  "mocha.env": {
+    "NODE_ENV": "test"
+  },
+  "editor.formatOnSave": true,
+  "mocha.enabled": true
+}

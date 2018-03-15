@@ -1,7 +1,7 @@
 import { createMockStore } from './utils'
 const td = global.td
 
-describe.only('createMockStore', () => {
+describe.skip('createMockStore', () => {
   let subject
 
   beforeEach(() => {
