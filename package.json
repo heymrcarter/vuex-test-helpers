@@ -4,6 +4,10 @@
   "description": "A test library to construct mock Vuex stores",
   "main": "dist/legacy/index.js",
   "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heymrcarter/vuex-test-helpers.git"
+  },
   "scripts": {
     "clean": "rimraf dist && mkdirp dist/legacy && mkdirp dist/legacy-umd",
     "build:legacy": "BABEL_ENV=legacy babel src --source-maps --no-comments --out-dir dist/legacy/",
@@ -37,8 +41,9 @@
     "testdouble-chai": "^0.5.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "istanbul": "^0.4.5",
+    "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
     "testdouble": "^3.5.2"
   },
   "standard": {
