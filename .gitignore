@@ -1,3 +1,5 @@
 node_modules
 .nyc_output
 dist
+.test_output
+test-results.xml
