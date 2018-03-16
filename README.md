@@ -1,5 +1,7 @@
 # Vuex test helpers
 
+![build-status](https://heymrcarter.visualstudio.com/_apis/public/build/definitions/a15db74e-6404-4bad-9ac6-1a85e3a155a4/17/badge)
+
 > A helper library to construct mock Vuex stores for tests
 
 ## Installation 
