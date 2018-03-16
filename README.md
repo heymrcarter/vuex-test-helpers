@@ -100,3 +100,160 @@ describe('MyComponent', () => {
   })
 })
 ```
+
+## API
+
+* [createMockStore](#createMockStore)
+  * [withState](#createMockStore_withState)
+  * [withGetters](#createMockStore_withGetters)
+  * [withActions](#ccreateMockStore_withActions)
+  * [withModule](#createMockStore_withModule)
+
+* [createMockModule](#createMockStore)
+  * [withState](#createMockStore_withState)
+  * [withGetters](#createMockStore_withGetters)
+  * [withActions](#ccreateMockStore_withActions)
+  * [withModule](#createMockStore_withModule)
+
+<h3 id="createMockStore"><code>createMockStore() : Returns MockStoreWrapper</code></h3> 
+
+Returns a `MockStoreWrapper` object which can be used to build a mock store.
+
+```js
+const mockStore = createMockStore().store
+```
+
+<h4 id="createMockStore_withState"><code>withState(state: Object) : Returns MockStoreWrapper</code></h4>
+
+Updates the working store with the given state object. If no state is provided, the store will default state to an empty object.
+
+Returns a `MockStoreWrapper` so all methods are chainable.
+
+```js
+const mockStore = createMockStore().withState({foo: 'bar'})
+
+console.log(mockStore.store.state) // { foo: 'bar' }
+```
+
+<h4 id="createMockStore_withGetters"><code>withGetters(getters: Array) : Returns MockStoreWrapper</code></h4>
+
+Updates the working store with mock getters. If no getters are provided, the store will create a default empty getters object.
+
+Returns a `MockStoreWrapper` so all methods are chainable.
+
+```js
+const mockStore = createMockStore().withGetters(['myGetter'])
+
+// in a spec
+td.when(mockStore.store.getters.myGetter()).thenReturn('my getter value')
+
+// in a view component that has mapped myGetter
+console.log(this.myGetter) // my getter value
+```
+
+<h4 id="createMockStore_withActions"><code>withActions(actions: Array) : Returns MockStoreWrapper</code></h4>
+
+Updates the working store with mock actions. If no actions are provided, the store will create a default empty actions object.
+
+Returns a `MockStoreWrapper` so all methods are chainable.
+
+```js
+const mockStore = createMockStore().withActions(['myAction'])
+
+// in a spec
+td.when(mockStore.store.actions.myAction()).thenResolve('my action result')
+
+// in a view component that has mapped myAction
+this.myAction().then(result => {
+  console.log(result) // my action result
+})
+```
+
+<h4 id="createMockStore_withModule"><code>withModule(name: String, module: Object) : Returns MockStoreWrapper</code></h4>
+
+Adds a module with the given name to the working store. If no name is provider a default, empty modules object is created. Use this method to add modules created with [`createMockModule`](#createMockModule) to your store.
+
+Returns a `MockStoreWrapper` so all methods are chainable.
+
+```js
+const testModule = createMockModule('test').withState({foo: 'bar'})
+const mockStore = createMockStore().withModule(testModule.name, testModule.module)
+console.log(mockStore.store.modules) // { test: { state: { foo: 'bar' } } }
+```
+
+<h3 id="createMockModule"><code>createMockModule(name: String) : Returns MockModuleWrapper</code></h3>
+
+Returns a `MockModuleWrapper` object which can be used to build a mock module.
+
+```js
+const mockModule = createMockModule('test')
+console.log(mockModule.name) // test
+console.log(mockModule.module) // {}
+```
+
+<h4 id="createMockModule_withState"><code>withState(state : Object) : Returns MockModuleWrapper</code></h4>
+
+Updates the modules state with the given object. If no object is provided a default empty object is created.
+
+Returns a `MockModuleWrapper` so all methods are chainable.
+
+```js
+const testModule = createMockModule('test').withState({foo: 'bar'})
+console.log(testModule.module.state) // { foo: 'bar' }
+```
+
+<h4 id="createMockModule_withGetters"><code>withGetters(getters : Array) : Returns MockModuleWrapper</code></h4>
+
+Creates mocked getters for the module. If no getters are provided a default empty getters object is created.
+
+Returns a `MockModuleWrapper` so all methods are chainable.
+
+```js
+const mockModule = createMockModule('test').withGetters(['myGetter'])
+
+// in a spec
+td.when(mockModule.module.getters.myGetter()).thenReturn('my getter value')
+
+// in a view component that has mapped myGetter from the test module
+console.log(this.myGetter) // my getter value
+```
+
+<h4 id="createMockModule_withActions"><code>withActions(actions : Array) : Returns MockModuleWrapper</code></h4>
+
+Creates mocked actions for the module. If no actions are provided a default empty actions object is created.
+
+Returns a `MockModuleWrapper` so all methods are chainable.
+
+```js
+const mockModule = createMockModule('test').withActions(['myAction'])
+
+// in a spec
+td.when(mockModule.module.actions.myAction()).thenResolve('my action result')
+
+// in a view component that has mapped myAction from the test module
+this.myAction().then(result => {
+  console.log(result) // my action result
+})
+```
+
+<h4 id="createMockModule_withModule"><code>withModule(name: String, module: Object) : Returns MockModuleWrapper</code></h4>
+
+Adds a module with the given name to the current module. If no name is provider a default, empty modules object is created. You can use this method to create store structures that have nested modules infitely deep.
+
+Returns a `MockModuleWrapper` so all methods are chainable.
+
+```js
+const testModule = createMockModule('test').withState({foo: 'bar'})
+const nestedModule = createMockModule('nested').withState({ nested: 'state' })
+
+testModule.withModule(nestedModule.name, nestedModule.module)
+console.log(testModule.module)
+// {
+//   state: { foo: 'bar' },
+//   modules: {
+//     nested: {
+//       state: { nested: 'state' }
+//     }
+//   }
+// }
+```
