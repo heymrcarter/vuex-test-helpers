@@ -6,12 +6,34 @@ describe('index', () => {
   describe('createMockModule', () => {
     let actual
 
-    beforeEach(() => {
-      actual = subject.createMockModule()
+    describe('when called without a name', () => {
+      it('throws an error', () => {
+        expect(() => subject.createMockModule()).to.throw('a module name is required when creating a mock module')
+      })
     })
 
-    it('returns a MockModuleWrapper', () => {
-      expect(actual instanceof MockModuleWrapper).to.be.true // eslint-disable-line
+    describe('happy path', () => {
+      beforeEach(() => {
+        actual = subject.createMockModule('test')
+      })
+
+      it('returns a MockModuleWrapper', () => {
+        expect(actual instanceof MockModuleWrapper).to.be.true // eslint-disable-line
+      })
+
+      it('creates the MockModuleWrapper with the specified name', () => {
+        expect(actual.name).to.equal('test')
+      })
+
+      describe('when created with options', () => {
+        beforeEach(() => {
+          actual = subject.createMockModule('test', { namespaced: true })
+        })
+
+        it('uses the options object to create the module', () => {
+          expect(actual.module.namespaced).to.be.true // eslint-disable-line
+        })
+      })
     })
   })
 

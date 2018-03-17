@@ -1,6 +1,6 @@
 {
   "name": "vuex-test-helpers",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A test library to construct mock Vuex stores",
   "main": "dist/legacy/index.js",
   "module": "src/index.js",
